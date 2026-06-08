@@ -1,5 +1,8 @@
 # Umgebungsvariablen – NIEMALS committen!
 .env
+
+# Mac Systemdateien
+.DS_Store
 .env.local
 .env.*.local
 
