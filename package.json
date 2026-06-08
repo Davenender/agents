@@ -1,0 +1,16 @@
+{
+  "name": "stripe-checkout",
+  "version": "1.0.0",
+  "description": "Stripe Checkout für Produkt X",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "stripe": "^16.0.0",
+    "resend": "^3.2.0"
+  }
+}

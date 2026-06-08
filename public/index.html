@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produkt X kaufen</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f0f4f8;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 { margin-bottom: 8px; color: #1a1a2e; }
+    .price { font-size: 2rem; font-weight: bold; color: #635bff; margin: 16px 0; }
+    p { color: #666; margin-bottom: 24px; }
+    button {
+      background: #635bff;
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    button:hover { background: #5145e5; }
+    button:disabled { background: #aaa; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Produkt X</h1>
+    <div class="price">29,99 €</div>
+    <p>Beschreibung von Produkt X – einmalige Zahlung, sofortiger Zugang.</p>
+    <button id="checkout-btn" onclick="checkout()">Jetzt kaufen</button>
+  </div>
+
+  <script>
+    async function checkout() {
+      const btn = document.getElementById("checkout-btn");
+      btn.disabled = true;
+      btn.textContent = "Weiterleitung...";
+
+      try {
+        const res = await fetch("/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert("Fehler: " + data.error);
+          btn.disabled = false;
+          btn.textContent = "Jetzt kaufen";
+        }
+      } catch (err) {
+        alert("Netzwerkfehler. Bitte erneut versuchen.");
+        btn.disabled = false;
+        btn.textContent = "Jetzt kaufen";
+      }
+    }
+  </script>
+</body>
+</html>
